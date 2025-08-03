@@ -1,2 +1,2 @@
 export * from './heroes';
-export * from './search-form';
+export * from './hero-form';

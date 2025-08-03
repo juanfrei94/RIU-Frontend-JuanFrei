@@ -1,0 +1,4 @@
+@let hero = hero$ | async;
+@defer {
+<riu-hero-form (submit)="submit()" [hero]="hero ?? null" />
+}
