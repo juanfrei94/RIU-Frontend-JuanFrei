@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Hero } from '../entities';
 import { environments } from '../../../../environments/environments';
@@ -9,12 +9,14 @@ export class HeroesService {
   private readonly _http = inject(HttpClient);
   private readonly baseUrl = `${environments.baseUrl}/heroes`;
 
-  public heroList = signal<Hero[]>([]);
+  public readonly filter = signal('');
 
-  public getAll(): Observable<Hero[]> {
-    return this._http
-      .get<Hero[]>(this.baseUrl)
-      .pipe(tap((heroes: Hero[]) => this.heroList.set(heroes)));
+  public heroList = computed(() => this._heroList());
+
+  private _heroList = signal<Hero[]>([]);
+
+  getAll(): Observable<Hero[]> {
+    return this._http.get<Hero[]>(this.baseUrl);
   }
 
   public getById(id: string): Observable<Hero | null> {

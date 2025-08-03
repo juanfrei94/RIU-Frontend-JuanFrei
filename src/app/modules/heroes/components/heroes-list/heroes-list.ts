@@ -34,9 +34,9 @@ export class HeroesList {
   public readonly buttonAction = output<Actions>();
   public readonly getColumnLabel = getColumnLabel;
 
-  public readonly buttons = [
-    { name: 'edit', action: Actions.Edit, color: 'primary' },
-    { name: 'delete', action: Actions.Delete, color: 'warn' },
+  public readonly listButtons = [
+    { name: 'edit', action: Actions.Edit },
+    { name: 'delete', action: Actions.Delete },
   ];
 
   public actionButton(action: Actions) {
