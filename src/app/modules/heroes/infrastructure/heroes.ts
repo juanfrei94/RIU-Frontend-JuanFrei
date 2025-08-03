@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Hero } from '../entities';
 import { environments } from '../../../../environments/environments';
 
@@ -9,8 +9,12 @@ export class HeroesService {
   private readonly _http = inject(HttpClient);
   private readonly baseUrl = `${environments.baseUrl}/heroes`;
 
+  public heroList = signal<Hero[]>([]);
+
   public getAll(): Observable<Hero[]> {
-    return this._http.get<Hero[]>(this.baseUrl);
+    return this._http
+      .get<Hero[]>(this.baseUrl)
+      .pipe(tap((heroes: Hero[]) => this.heroList.set(heroes)));
   }
 
   public getById(id: string): Observable<Hero | null> {
@@ -34,7 +38,7 @@ export class HeroesService {
     );
   }
 
-  public getByFilter(filter: string): Observable<Hero[]> {
-    return this._http.get<Hero[]>(`${this.baseUrl}?q=${filter}&limit=10`);
+  public getByFilter(filter: string | null): Observable<Hero[]> {
+    return this._http.get<Hero[]>(`${this.baseUrl}?q=${filter}&_limit=10`);
   }
 }
