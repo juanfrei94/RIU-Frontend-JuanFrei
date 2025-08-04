@@ -1,5 +1,5 @@
 @let form = heroFormService.form;
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="hero-form">
+<form [formGroup]="form" class="hero-form">
 
     @for (field of formFields; track field.name) {
     <mat-form-field appearance="outline" class="full-width">
@@ -28,5 +28,5 @@
     </mat-form-field>
     }
 
-    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" type="button">Guardar</button>
 </form>

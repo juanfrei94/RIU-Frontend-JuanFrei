@@ -1,18 +1,12 @@
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  input,
-  OnInit,
-  output,
-} from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOption } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
-import { Hero } from '../../entities';
 import { MatButtonModule } from '@angular/material/button';
+
+import { Hero } from '../../entities';
 import { HeroFormService } from '../../infrastructure';
 import { formFields } from './hero-form-fields';
 
@@ -29,7 +23,6 @@ import { formFields } from './hero-form-fields';
   ],
   templateUrl: './hero-form.html',
   styleUrl: './hero-form.scss',
-  providers: [HeroFormService],
 })
 export class HeroForm implements OnInit {
   public readonly heroFormService = inject(HeroFormService);
@@ -48,7 +41,7 @@ export class HeroForm implements OnInit {
     this.submit.emit();
   }
 
-  getError(controlName: string, error: string): boolean {
+  public getError(controlName: string, error: string): boolean {
     const control = this.heroFormService.form.get(controlName);
     return !!(control && control.hasError(error));
   }
