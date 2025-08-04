@@ -40,7 +40,8 @@ export class HeroesService {
   }
 
   public addHero(hero: Hero): Observable<Hero> {
-    return this._http.post<Hero>(this.baseUrl, hero);
+    const publisherToId = hero.publisher.split(' ')[0].toLowerCase();
+    return this._http.post<Hero>(this.baseUrl, {...hero, id: `${publisherToId}-${hero.superhero.toLowerCase()}`});
   }
 
   public updateHero(hero: Hero): Observable<Hero> {

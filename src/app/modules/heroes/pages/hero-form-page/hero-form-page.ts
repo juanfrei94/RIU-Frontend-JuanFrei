@@ -31,7 +31,7 @@ export class HeroFormPage {
   );
 
   public submit() {
-    if (!this._heroFormService.isValid) {
+    if (!this._heroFormService.isValid()) {
       return;
     }
     const hero = this._heroFormService.form.value as unknown as Hero;
