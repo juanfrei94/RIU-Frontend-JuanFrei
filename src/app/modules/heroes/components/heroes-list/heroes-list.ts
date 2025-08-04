@@ -1,6 +1,6 @@
-import { Component, input, output } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { Component, effect, input, output, viewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -38,6 +38,22 @@ export class HeroesList {
     { name: 'edit', action: this.actions.Edit },
     { name: 'delete', action: this.actions.Delete },
   ];
+
+  public readonly paginator = viewChild(MatPaginator);
+  public dataSource = new MatTableDataSource<Hero>([]);
+
+  constructor() {
+    effect(() => {
+      this.dataSource.data = this.list();
+    });
+
+    effect(() => {
+      const paginatorInstance = this.paginator();
+      if (paginatorInstance) {
+        this.dataSource.paginator = paginatorInstance;
+      }
+    });
+  }
 
   public actionButton(action: Actions, hero?: Hero) {
     this.buttonAction.emit({ action, hero: hero ?? null });
