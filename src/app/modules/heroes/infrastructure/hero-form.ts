@@ -33,7 +33,7 @@ export class HeroFormService {
         nonNullable: true,
       });
     });
-
+    group['id'] = new FormControl('');
     return new FormGroup(group);
   }
 
