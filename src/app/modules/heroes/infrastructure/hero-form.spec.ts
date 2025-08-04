@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-
-import { HeroForm } from './hero-form';
+import { HeroForm } from '../components/hero-form/hero-form';
 
 describe('HeroForm', () => {
   let service: HeroForm;
