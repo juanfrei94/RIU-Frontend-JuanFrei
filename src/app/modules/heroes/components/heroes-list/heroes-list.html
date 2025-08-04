@@ -3,15 +3,14 @@
     <h2>Heroes List</h2>
     <button mat-button (click)="actionButton(actions.Create)"> Add Hero </button>
   </div>
-  <mat-table [dataSource]="list()">
+  <mat-table [dataSource]="dataSource">
     @for (column of columnsToDisplay; track column) { @switch (column) {
     @case('actions') {
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let hero">
         @for (button of listButtons; track button.name) {
-        <button mat-icon-button [attr.ariaLabel]="button.action + ' heroe'"
-          (click)="actionButton(button.action, hero)">
+        <button mat-icon-button [attr.ariaLabel]="button.action + ' heroe'" (click)="actionButton(button.action, hero)">
           <mat-icon>{{ button.name }}</mat-icon>
         </button>
         }
