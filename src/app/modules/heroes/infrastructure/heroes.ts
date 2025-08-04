@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+
 import { Hero } from '../entities';
 import { environments } from '../../../../environments/environments';
 
@@ -9,17 +10,27 @@ export class HeroesService {
   private readonly _http = inject(HttpClient);
   private readonly baseUrl = `${environments.baseUrl}/heroes`;
 
-  public readonly filter = signal('');
-
+  public filter = signal('');
   public heroList = computed(() => this._heroList());
 
   private _heroList = signal<Hero[]>([]);
+  private _skipFirstRun: boolean = true;
 
-  getAll(): Observable<Hero[]> {
+  constructor() {
+    this._setupFilterEffect();
+  }
+
+  public getAll(): Observable<Hero[]> {
     return this._http.get<Hero[]>(this.baseUrl).pipe(
       catchError(() => of([])),
       tap((heroes) => this._heroList.set(heroes))
     );
+  }
+
+  public getByFilter(filter: string | null): Observable<Hero[]> {
+    return this._http
+      .get<Hero[]>(`${this.baseUrl}?q=${filter}`)
+      .pipe(tap((heroes) => this._heroList.set(heroes)));
   }
 
   public getById(id: string): Observable<Hero | null> {
@@ -43,7 +54,21 @@ export class HeroesService {
     );
   }
 
-  public getByFilter(filter: string | null): Observable<Hero[]> {
-    return this._http.get<Hero[]>(`${this.baseUrl}?q=${filter}&_limit=10`);
+  private _setupFilterEffect(): void {
+    effect(() => {
+      const filter = this.filter().trim();
+
+      if (this._skipFirstRun) {
+        this._skipFirstRun = false;
+        return;
+      }
+
+      if (!filter) {
+        this.getAll().subscribe();
+        return;
+      }
+
+      this.getByFilter(filter).subscribe();
+    });
   }
 }

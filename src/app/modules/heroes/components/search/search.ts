@@ -2,15 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
+
 import { HeroesService } from '../../infrastructure';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  shareReplay,
-  startWith,
-  switchMap,
-} from 'rxjs';
 
 @Component({
   selector: 'riu-search',
@@ -26,9 +20,8 @@ export class Search {
   public readonly filteredHeroes$ = this.searchInput.valueChanges
     .pipe(
       debounceTime(450),
-      filter((value) => !!value),
       distinctUntilChanged(),
-      switchMap((value) => this._heroService.getByFilter(value || ''))
+      tap((value) => this._heroService.filter.set(value ?? ''))
     )
-    .subscribe(console.log);
+    .subscribe();
 }
