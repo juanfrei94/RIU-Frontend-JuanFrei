@@ -1,0 +1,5 @@
+@defer (when heroes$ | async) {
+<riu-search />
+<mat-divider />
+<riu-heroes-list (buttonAction)="trigger($event)" [list]="heroService.heroList()" />
+}
