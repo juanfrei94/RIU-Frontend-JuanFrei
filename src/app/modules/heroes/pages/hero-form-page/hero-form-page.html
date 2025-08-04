@@ -1,4 +1,8 @@
-@let hero = hero$ | async;
-@defer {
-<riu-hero-form (submit)="submit()" [hero]="hero ?? null" />
+<button mat-button (click)="back()">
+    Return to list
+</button>
+@if(hero$ | async; as hero) {
+@defer (when hero) {
+<riu-hero-form (submit)="submit()" [hero]="hero" />
+}
 }
