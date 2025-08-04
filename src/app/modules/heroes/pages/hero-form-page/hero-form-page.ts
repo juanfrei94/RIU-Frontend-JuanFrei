@@ -5,11 +5,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { HeroForm } from '../../components/hero-form/hero-form';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'riu-hero-form-page',
-  imports: [AsyncPipe, HeroForm, MatProgressSpinnerModule],
+  imports: [AsyncPipe, HeroForm, MatButton],
   templateUrl: './hero-form-page.html',
   styleUrl: './hero-form-page.scss',
 })
@@ -19,11 +19,13 @@ export class HeroFormPage {
   private readonly _heroService = inject(HeroesService);
 
   public readonly hero$ = this._activatedRoute.params.pipe(
-    switchMap(({ id }) => (!id ? of(id) : this._heroService.getById(id))),
+    switchMap(({ id }) => (!id ? of(id ?? []) : this._heroService.getById(id))),
     takeUntilDestroyed()
   );
 
-  public submit() {
-    
+  public submit() {}
+
+  public back() {
+    this._router.navigate(['heroes']);
   }
 }

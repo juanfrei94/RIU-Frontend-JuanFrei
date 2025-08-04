@@ -16,7 +16,10 @@ export class HeroesService {
   private _heroList = signal<Hero[]>([]);
 
   getAll(): Observable<Hero[]> {
-    return this._http.get<Hero[]>(this.baseUrl);
+    return this._http.get<Hero[]>(this.baseUrl).pipe(
+      catchError(() => of([])),
+      tap((heroes) => this._heroList.set(heroes))
+    );
   }
 
   public getById(id: string): Observable<Hero | null> {

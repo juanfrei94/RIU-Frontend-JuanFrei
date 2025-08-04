@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,7 +41,6 @@ export class HeroForm implements OnInit {
   public ngOnInit(): void {
     const hero = this.hero();
     if (!hero) return;
-
     this.heroFormService.form.patchValue(hero as any);
   }
 

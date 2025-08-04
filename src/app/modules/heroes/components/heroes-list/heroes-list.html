@@ -1,5 +1,8 @@
-<div>
-  <h2>Heroes List</h2>
+<div class="hero-list">
+  <div class="hero-list__header">
+    <h2>Heroes List</h2>
+    <button mat-button (click)="actionButton(actions.Create)"> Add Hero </button>
+  </div>
   <mat-table [dataSource]="list()">
     @for (column of columnsToDisplay; track column) { @switch (column) {
     @case('actions') {
@@ -7,12 +10,8 @@
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let hero">
         @for (button of listButtons; track button.name) {
-
-        <button
-          mat-icon-button
-          [attr.ariaLabel]="button.action + ' heroe'"
-          (click)="actionButton(button.action)"
-        >
+        <button mat-icon-button [attr.ariaLabel]="button.action + ' heroe'"
+          (click)="actionButton(button.action, hero)">
           <mat-icon>{{ button.name }}</mat-icon>
         </button>
         }
@@ -34,11 +33,7 @@
   </mat-table>
 
   @if(list().length) {
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
   </mat-paginator>
   }
 </div>
