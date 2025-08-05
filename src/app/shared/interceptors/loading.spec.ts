@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { HeroForm } from '../components/hero-form/hero-form';
 
-describe('HeroForm', () => {
-  let service: HeroForm;
+import { Loading } from './loading';
+
+describe('Loading', () => {
+  let service: Loading;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HeroForm);
+    service = TestBed.inject(Loading);
   });
 
   it('should be created', () => {

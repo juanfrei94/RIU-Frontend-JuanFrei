@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'riu-loading',
-  imports: [],
+  imports: [MatProgressSpinnerModule],
   templateUrl: './loading.html',
   styleUrl: './loading.scss',
 })
