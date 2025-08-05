@@ -20,4 +20,8 @@ export const HEROES_ROUTES: Routes = [
         (c) => c.HeroFormPage
       ),
   },
+  {
+    path: '**',
+    redirectTo: '/',
+  },
 ];

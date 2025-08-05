@@ -9,6 +9,12 @@ export const routes: Routes = [
     children: HEROES_ROUTES,
   },
   {
+    path: 'loading',
+    outlet: 'loading',
+    loadComponent: () =>
+      import('./shared/components/loading/loading').then((c) => c.Loading),
+  },
+  {
     path: '',
     redirectTo: 'heroes',
     pathMatch: 'full',
