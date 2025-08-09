@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { formFields } from '../components/hero-form/hero-form-fields';
 import { FormField } from '../entities/base-form-field';
+import { formFieldBuilder } from '../utils/formFieldBuilder';
 
 type HeroFormType = { [key: string]: FormControl<string> };
 
@@ -15,24 +11,7 @@ export class HeroFormService {
   private _heroForm = this.buildForm(formFields);
 
   private buildForm(formFields: FormField[]): FormGroup {
-    const group: { [key: string]: FormControl<any> } = {};
-
-    formFields.forEach((field: any) => {
-      const validators: ValidatorFn[] = [];
-
-      if (field.validators?.required) {
-        validators.push(Validators.required);
-      }
-
-      if (field.validators?.minlength) {
-        validators.push(Validators.minLength(3));
-      }
-
-      group[field.name] = new FormControl('', {
-        validators,
-        nonNullable: true,
-      });
-    });
+    const group = formFieldBuilder(formFields);
     group['id'] = new FormControl('');
     return new FormGroup(group);
   }
@@ -45,5 +24,10 @@ export class HeroFormService {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
     return this.form.valid;
+  }
+
+  public markAsDuplicated() {
+    this.form.get('superhero')?.setErrors({ duplicated: true });
+    this.form.updateValueAndValidity();
   }
 }
