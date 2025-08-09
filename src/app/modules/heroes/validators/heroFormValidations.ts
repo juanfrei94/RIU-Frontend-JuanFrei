@@ -1,16 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-const yearRange =
-  (): ValidatorFn =>
-  (control: AbstractControl): ValidationErrors | null => {
-    const value = Number(control.value);
-    const min = 1930;
-    const max = new Date().getFullYear();
-    if (!Number.isInteger(value)) return { year: 'notInteger' };
-    return value >= min && value <= max ? null : { yearRange: { min, max } };
-  };
-
-export const commaList =
+const commaList =
   (): ValidatorFn =>
   (control: AbstractControl): ValidationErrors | null => {
     const raw = String(control.value ?? '').trim();
@@ -31,7 +21,6 @@ export const commaList =
 
 export const specialValidators = {
   commaList: commaList,
-  yearRange: yearRange,
 };
 
 export type SpecialValidatorKey = keyof typeof specialValidators;

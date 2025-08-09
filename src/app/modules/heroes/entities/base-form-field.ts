@@ -1,5 +1,3 @@
-type FieldType = 'input' | 'select';
-
 interface PatternValidation {
   type: 'pattern';
   pattern: string;
@@ -14,7 +12,6 @@ type Validation = { type: 'required' } | PatternValidation | SpecialValidation;
 export interface BaseFormField {
   name: string;
   label: string;
-  type: FieldType;
   validations: Validation[];
 }
 

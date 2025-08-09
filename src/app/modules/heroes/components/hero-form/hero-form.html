@@ -18,12 +18,10 @@
         }
         }
 
-        <!-- @if (getError(field.name, 'required')) {
-        <mat-error>{{ field.validators?.required }}</mat-error>
+        @let message = getErrorMessage(field.name);
+        @if (message) {
+        <mat-error>{{ message }}</mat-error>
         }
-        @if (getError(field.name, 'minlength')) {
-        <mat-error>{{ field.validators?.minlength }}</mat-error>
-        } -->
 
     </mat-form-field>
     }

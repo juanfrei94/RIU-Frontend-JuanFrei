@@ -37,7 +37,7 @@ export const formFields: FormField[] = [
       },
       {
         type: 'pattern',
-        pattern: '^[\\S\\s]{2,50}$'
+        pattern: '^(?![ ._])(?!.* {2})[A-Za-z0-9][A-Za-z0-9 .]{2,49}$'
       }
     ],
   },
@@ -49,9 +49,9 @@ export const formFields: FormField[] = [
       {
         type: 'required'
       },
-      {
-        type: 'special',
-        validator: 'yearRange'
+            {
+        type: 'pattern',
+        pattern: '^(?![ ._])(?!.* {2})[A-Za-z0-9][A-Za-z0-9 .]{2,49}$'
       }
     ]
   },

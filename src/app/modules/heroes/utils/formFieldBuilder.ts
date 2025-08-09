@@ -1,9 +1,6 @@
 import { FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { BaseFormField, FormField } from '../entities/base-form-field';
-import {
-  SpecialValidatorKey,
-  specialValidators,
-} from '../validators/heroFormValidations';
+import { SpecialValidatorKey, specialValidators } from '../validators';
 
 export const formFieldBuilder = (formFields: FormField[]) => {
   const group: { [key: string]: FormControl<string | null> } = {};
@@ -23,7 +20,6 @@ export const formFieldBuilder = (formFields: FormField[]) => {
           case 'special':
             const special =
               specialValidators[validation.validator as SpecialValidatorKey];
-
             validators.push(special());
             break;
         }

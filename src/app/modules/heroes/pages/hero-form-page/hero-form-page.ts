@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap, of, tap } from 'rxjs';
+import { switchMap, of, tap, catchError, EMPTY, filter } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 
@@ -35,9 +35,15 @@ export class HeroFormPage {
       return;
     }
     const hero = this._heroFormService.form.value as unknown as Hero;
-    this._heroService[this.isEdit ? 'updateHero' : 'addHero'](hero).subscribe(
-      () => this.back()
-    );
+    this._heroService
+      .save(hero, this.isEdit)
+      .pipe(
+        catchError(() => {
+          this._heroFormService.markAsDuplicated();
+          return EMPTY;
+        })
+      )
+      .subscribe(() => this.back());
   }
 
   public back() {

@@ -25,4 +25,9 @@ export class HeroFormService {
     this.form.updateValueAndValidity();
     return this.form.valid;
   }
+
+  public markAsDuplicated() {
+    this.form.get('superhero')?.setErrors({ duplicated: true });
+    this.form.updateValueAndValidity();
+  }
 }
