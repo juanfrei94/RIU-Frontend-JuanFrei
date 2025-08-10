@@ -1,0 +1,30 @@
+@let form = heroFormService.form;
+<form [formGroup]="form" class="hero-form">
+
+    @for (field of formFields; track field.name) {
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+
+        @switch (field.type) {
+        @case ('select') {
+        <mat-select [formControlName]="field.name">
+            @for (option of field.options; track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+            }
+        </mat-select>
+        }
+        @default {
+        <input matInput [formControlName]="field.name" />
+        }
+        }
+
+        @let message = getErrorMessage(field.name);
+        @if (message) {
+        <mat-error>{{ message }}</mat-error>
+        }
+
+    </mat-form-field>
+    }
+
+    <button mat-raised-button color="primary" (click)="onSubmit()" type="button">Guardar</button>
+</form>
