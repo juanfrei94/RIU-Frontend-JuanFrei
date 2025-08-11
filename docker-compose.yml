@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+    command:
+      [
+        "npx",
+        "json-server",
+        "--watch",
+        "data/db.json",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "3000",
+      ]
+    ports:
+      - "3000:3000"
