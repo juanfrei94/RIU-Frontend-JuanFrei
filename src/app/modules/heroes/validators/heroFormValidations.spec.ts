@@ -44,9 +44,8 @@ describe('specialValidators.commaList', () => {
     expect(res).toEqual({ listItemInvalid: long });
   });
 
-  it('should mark an item as invalid if it contains double spaces (\\s{2,})', () => {
+  it('should mark an item as invalid if it contains double spaces', () => {
     const bad = 'foo  bar';
-
     const res = run(`ok, ${bad}, fine`);
     expect(res).toEqual({ listItemInvalid: bad });
   });
