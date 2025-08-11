@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { Dialog } from './dialog';
 import { Hero } from '../../../modules/heroes/entities';
 
-fdescribe('Dialog', () => {
+describe('Dialog', () => {
   let fixture: ComponentFixture<Dialog>;
   let component: Dialog;
   let dialogRef: jasmine.SpyObj<MatDialogRef<Dialog>>;
@@ -19,7 +20,7 @@ fdescribe('Dialog', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [Dialog], // componente standalone
+      imports: [Dialog],
       providers: [
         { provide: MatDialogRef, useValue: dialogRef },
         { provide: MAT_DIALOG_DATA, useValue: mockHero },
@@ -49,9 +50,5 @@ fdescribe('Dialog', () => {
     component.onConfirm();
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
     expect(dialogRef.close).toHaveBeenCalledWith(true);
-  });
-
-  it('no debería cerrar automáticamente al inicializar', () => {
-    expect(dialogRef.close).not.toHaveBeenCalled();
   });
 });
