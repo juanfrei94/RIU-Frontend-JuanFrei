@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 
 import { Hero } from '../entities';
 import { environments } from '../../../../environments/environments';
@@ -41,7 +41,17 @@ export class HeroesService {
 
   public addHero(hero: Hero): Observable<Hero> {
     const publisherToId = hero.publisher.split(' ')[0].toLowerCase();
-    return this._http.post<Hero>(this.baseUrl, {...hero, id: `${publisherToId}-${hero.superhero.toLowerCase()}`});
+    return this._http
+      .post<Hero>(this.baseUrl, {
+        ...hero,
+        id: `${publisherToId}-${hero.superhero.toLowerCase()}`,
+      })
+      .pipe(
+        catchError(({ error }: HttpErrorResponse) => {
+          const duplicated = String(error).includes('duplicate');
+          return throwError(() => ({ error, duplicated }));
+        })
+      );
   }
 
   public updateHero(hero: Hero): Observable<Hero> {
@@ -53,6 +63,10 @@ export class HeroesService {
       map(() => true),
       catchError(() => of(false))
     );
+  }
+
+  public save(hero: Hero, isEdit: boolean): Observable<Hero> {
+    return isEdit ? this.updateHero(hero) : this.addHero(hero);
   }
 
   private _setupFilterEffect(): void {

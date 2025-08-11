@@ -1,15 +1,18 @@
-type FieldType = 'input' | 'select';
-
-interface FieldValidators {
-  required?: string;
-  minlength?: string;
+interface PatternValidation {
+  type: 'pattern';
+  pattern: string;
+}
+interface SpecialValidation {
+  type: 'special';
+  validator: string;
 }
 
-interface BaseFormField {
+type Validation = { type: 'required' } | PatternValidation | SpecialValidation;
+
+export interface BaseFormField {
   name: string;
   label: string;
-  type: FieldType;
-  validators?: FieldValidators;
+  validations: Validation[];
 }
 
 interface InputField extends BaseFormField {

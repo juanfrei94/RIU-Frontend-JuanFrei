@@ -6,43 +6,67 @@ export const formFields: FormField[] = [
     name: 'superhero',
     label: 'Superhéroe',
     type: 'input',
-    validators: {
-      required: 'Este campo es obligatorio',
-      minlength: 'Mínimo 3 caracteres',
-    },
+    validations: [
+      {
+        type: 'required'
+      },
+      {
+        type: 'pattern',
+        pattern: '^(?![ ._])(?!.* {2})[A-Za-z0-9][A-Za-z0-9 .]{2,49}$'
+      }
+    ] 
   },
   {
     name: 'publisher',
     label: 'Editorial',
     type: 'select',
     options: Object.values(Publisher),
-    validators: {
-      required: 'Seleccioná una editorial',
-    },
+    validations: [
+      {
+        type: 'required'
+      },
+    ]
   },
   {
     name: 'alter_ego',
     label: 'Alter Ego',
     type: 'input',
-    validators: {
-      required: 'Este campo es obligatorio',
-      minlength: 'Mínimo 3 caracteres',
-    },
+    validations: [
+      {
+        type: 'required'
+      },
+      {
+        type: 'pattern',
+        pattern: '^(?![ ._])(?!.* {2})[A-Za-z0-9][A-Za-z0-9 .]{2,49}$'
+      }
+    ],
   },
   {
     name: 'first_appearance',
     label: 'Primera aparición',
     type: 'input',
-    validators: {
-      required: 'Este campo es obligatorio',
-    },
+    validations: [
+      {
+        type: 'required'
+      },
+            {
+        type: 'pattern',
+        pattern: '^(?![ ._])(?!.* {2})[A-Za-z0-9][A-Za-z0-9 .]{2,49}$'
+      }
+    ]
   },
   {
     name: 'characters',
     label: 'Personajes',
     type: 'input',
-    validators: {
-      required: 'Este campo es obligatorio',
-    },
+    validations: [
+      {
+        type: 'required'
+      },
+      {
+        type: 'special',
+        validator: 'commaList'
+      }
+    ]
   },
 ];

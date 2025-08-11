@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Hero } from '../../entities';
 import { HeroFormService } from '../../infrastructure';
 import { formFields } from './hero-form-fields';
+import { errorMaps } from '../../validators';
 
 @Component({
   selector: 'riu-hero-form',
@@ -41,8 +42,9 @@ export class HeroForm implements OnInit {
     this.submit.emit();
   }
 
-  public getError(controlName: string, error: string): boolean {
+  public getErrorMessage(controlName: string): string {
     const control = this.heroFormService.form.get(controlName);
-    return !!(control && control.hasError(error));
+    const firstError = Object.keys(control?.errors ?? {})[0];
+    return errorMaps[firstError];
   }
 }
