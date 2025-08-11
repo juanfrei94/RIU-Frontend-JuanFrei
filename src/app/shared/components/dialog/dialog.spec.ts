@@ -32,21 +32,21 @@ describe('Dialog', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería inyectar los datos del héroe', () => {
+  it('should inject data', () => {
     expect(component.data).toEqual(mockHero as any);
   });
 
-  it('onNoClick debería cerrar el diálogo con false', () => {
+  it('should onNoClick close dialog with false', () => {
     component.onNoClick();
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
     expect(dialogRef.close).toHaveBeenCalledWith(false);
   });
 
-  it('onConfirm debería cerrar el diálogo con true', () => {
+  it('should onNoClick close dialog with true', () => {
     component.onConfirm();
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
     expect(dialogRef.close).toHaveBeenCalledWith(true);
