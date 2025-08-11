@@ -17,6 +17,15 @@ ng serve -o
 
 This SPA uses a fake backend with json-server to serve the APIs
 
+## Test
+Application tested with Karma/Jasmine
+
+```
+"test": "ng test",
+"test:coverage": "ng test --watch=false --browsers=ChromeHeadless --code-coverage"
+```
+
+<img width="513" height="131" alt="image" src="https://github.com/user-attachments/assets/b3c6bfdc-b196-4cab-aef7-42e9ab3c4d15" />
 
 ## Docker
 
